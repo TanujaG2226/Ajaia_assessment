@@ -88,3 +88,5 @@ cd frontend
 npm install
 npm run dev
 ```
+### Optional Stretch
+- Added basic Markdown export for edited documents.

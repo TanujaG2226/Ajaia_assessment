@@ -37,6 +37,38 @@ export default function EditorPage({ documentId, currentUser, users, onSaved }) 
     onSaved();
   };
 
+  const exportMarkdown = () => {
+    const html = editor.getHTML();
+
+    const markdown = html
+      .replace(/<h1>(.*?)<\/h1>/g, "# $1\n\n")
+      .replace(/<h2>(.*?)<\/h2>/g, "## $1\n\n")
+      .replace(/<h3>(.*?)<\/h3>/g, "### $1\n\n")
+      .replace(/<p>(.*?)<\/p>/g, "$1\n\n")
+      .replace(/<strong>(.*?)<\/strong>/g, "**$1**")
+      .replace(/<em>(.*?)<\/em>/g, "_$1_")
+      .replace(/<u>(.*?)<\/u>/g, "$1")
+      .replace(/<ul>/g, "")
+      .replace(/<\/ul>/g, "\n")
+      .replace(/<ol>/g, "")
+      .replace(/<\/ol>/g, "\n")
+      .replace(/<li><p>(.*?)<\/p><\/li>/g, "- $1\n")
+      .replace(/<li>(.*?)<\/li>/g, "- $1\n")
+      .replace(/<[^>]+>/g, "")
+      .trim();
+
+    const blob = new Blob([markdown], { type: "text/markdown" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${title || "document"}.md`;
+    link.click();
+
+    URL.revokeObjectURL(url);
+    setMessage("Markdown exported.");
+  };
+
   const shareDocument = async () => {
     if (!sharedUserId) {
       setMessage("Please select a user to share with.");
@@ -55,64 +87,69 @@ export default function EditorPage({ documentId, currentUser, users, onSaved }) 
   if (!editor) return <p>Loading editor...</p>;
 
   return (
-  <div className="editor-card">
-    <input
-      className="title-input"
-      value={title}
-      onChange={(e) => setTitle(e.target.value)}
-    />
+    <div className="editor-card">
+      <input
+        className="title-input"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
 
-    <div className="toolbar">
-      <button onClick={() => editor.chain().focus().toggleBold().run()}>
-        Bold
-      </button>
-      <button onClick={() => editor.chain().focus().toggleItalic().run()}>
-        Italic
-      </button>
-      <button onClick={() => editor.chain().focus().toggleUnderline().run()}>
-        Underline
-      </button>
-      <button onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}>
-        Heading
-      </button>
-      <button onClick={() => editor.chain().focus().toggleBulletList().run()}>
-        Bullet List
-      </button>
-      <button onClick={() => editor.chain().focus().toggleOrderedList().run()}>
-        Numbered List
-      </button>
+      <div className="toolbar">
+        <button onClick={() => editor.chain().focus().toggleBold().run()}>
+          Bold
+        </button>
+        <button onClick={() => editor.chain().focus().toggleItalic().run()}>
+          Italic
+        </button>
+        <button onClick={() => editor.chain().focus().toggleUnderline().run()}>
+          Underline
+        </button>
+        <button onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}>
+          Heading
+        </button>
+        <button onClick={() => editor.chain().focus().toggleBulletList().run()}>
+          Bullet List
+        </button>
+        <button onClick={() => editor.chain().focus().toggleOrderedList().run()}>
+          Numbered List
+        </button>
+      </div>
+
+      <div className="document-page">
+        <EditorContent editor={editor} />
+      </div>
+
+      <div className="save-row">
+        <button className="save-button" onClick={saveDocument}>
+          Save
+        </button>
+
+        <button className="save-button" onClick={exportMarkdown}>
+          Export Markdown
+        </button>
+
+        {message && <p className="status-message">{message}</p>}
+      </div>
+
+      <div className="share-panel">
+        <h3>Share Document</h3>
+
+        <select
+          value={sharedUserId}
+          onChange={(e) => setSharedUserId(e.target.value)}
+        >
+          <option value="">Select user</option>
+          {users
+            .filter((user) => user.id !== currentUser.id)
+            .map((user) => (
+              <option key={user.id} value={user.id}>
+                {user.name}
+              </option>
+            ))}
+        </select>
+
+        <button onClick={shareDocument}>Share</button>
+      </div>
     </div>
-
-    <div className="document-page">
-      <EditorContent editor={editor} />
-    </div>
-
-    <div className="save-row">
-      <button className="save-button" onClick={saveDocument}>
-        Save
-      </button>
-      {message && <p className="status-message">{message}</p>}
-    </div>
-
-    <div className="share-panel">
-      <h3>Share Document</h3>
-
-      <select
-        value={sharedUserId}
-        onChange={(e) => setSharedUserId(e.target.value)}
-      >
-        <option value="">Select user</option>
-        {users
-          .filter((user) => user.id !== currentUser.id)
-          .map((user) => (
-            <option key={user.id} value={user.id}>
-              {user.name}
-            </option>
-          ))}
-      </select>
-
-      <button onClick={shareDocument}>Share</button>
-    </div>
-  </div>
-);
+  );
 }

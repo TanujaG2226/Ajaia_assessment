@@ -1,0 +1,231 @@
+:root {
+  font-family: Inter, Arial, sans-serif;
+  color: #241133;
+  background: #f7f2ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f7f2ff;
+}
+
+button,
+select,
+input {
+  font: inherit;
+}
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.top-bar {
+  height: 76px;
+  background: #ffffff;
+  border-bottom: 1px solid #e7d7fb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  box-shadow: 0 1px 8px rgba(86, 36, 138, 0.08);
+}
+
+.top-bar h1 {
+  margin: 0;
+  color: #6b21a8;
+  font-size: 1.45rem;
+}
+
+.top-bar p {
+  margin: 4px 0 0;
+  color: #7e6a91;
+  font-size: 0.85rem;
+}
+
+.top-actions select {
+  border: 1px solid #d8b4fe;
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: #faf5ff;
+  color: #4c1d95;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  min-height: calc(100vh - 76px);
+}
+
+.sidebar {
+  background: #fbf7ff;
+  border-right: 1px solid #e7d7fb;
+  padding: 20px;
+}
+
+.primary-button {
+  width: 100%;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 16px;
+  background: #7e22ce;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(126, 34, 206, 0.22);
+}
+
+.primary-button:hover {
+  background: #6b21a8;
+}
+
+.sidebar h3 {
+  margin-top: 24px;
+  margin-bottom: 10px;
+  color: #581c87;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.doc-item {
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 6px;
+  color: #3b2550;
+}
+
+.doc-item:hover {
+  background: #f3e8ff;
+}
+
+.doc-item.active {
+  background: #ead6ff;
+  color: #581c87;
+  font-weight: 700;
+}
+
+.doc-item.shared {
+  color: #6b5b7a;
+}
+
+.editor-area {
+  padding: 28px;
+  overflow: auto;
+}
+
+.editor-card {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.title-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: #241133;
+  font-size: 2rem;
+  font-weight: 700;
+  padding: 8px 4px;
+  outline: none;
+}
+
+.toolbar {
+  background: #ffffff;
+  border: 1px solid #e7d7fb;
+  border-radius: 14px;
+  padding: 10px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 12px 0 18px;
+  box-shadow: 0 2px 10px rgba(86, 36, 138, 0.06);
+}
+
+.toolbar button,
+.share-panel button {
+  border: 1px solid #d8b4fe;
+  background: #faf5ff;
+  color: #581c87;
+  border-radius: 9px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.toolbar button:hover,
+.share-panel button:hover {
+  background: #f3e8ff;
+}
+
+.document-page {
+  background: white;
+  min-height: 620px;
+  border-radius: 4px;
+  padding: 56px 64px;
+  box-shadow: 0 4px 24px rgba(86, 36, 138, 0.14);
+  border: 1px solid #eee4fa;
+}
+
+.document-page .ProseMirror {
+  min-height: 500px;
+  outline: none;
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+.save-row {
+  margin-top: 18px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.save-button {
+  border: none;
+  background: #7e22ce;
+  color: white;
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.share-panel {
+  margin-top: 22px;
+  background: #ffffff;
+  border: 1px solid #e7d7fb;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.share-panel h3 {
+  margin-top: 0;
+  color: #581c87;
+}
+
+.share-panel select {
+  border: 1px solid #d8b4fe;
+  border-radius: 9px;
+  padding: 8px;
+  margin-right: 8px;
+}
+
+.status-message {
+  color: #6b21a8;
+  font-weight: 600;
+}
+
+.empty-state {
+  max-width: 600px;
+  margin: 120px auto;
+  text-align: center;
+  color: #6b5b7a;
+}
+
+.empty-state h2 {
+  color: #581c87;
+}
